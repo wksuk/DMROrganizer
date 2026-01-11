@@ -14,7 +14,6 @@ A WPF desktop app for organizing DMR channel data. Add, edit, delete, filter, im
 - About box: shows `WKSUK`, `Version 1.0`, and ORCID ID.
 
 ## Screenshots
-Add your captures to `docs/screenshots/` and update paths below.
 
 ![Main window](docs/screenshots/main.png)
 
@@ -38,10 +37,10 @@ Add your captures to `docs/screenshots/` and update paths below.
 - About: click `About` for app info.
 
 ## Project Structure
-- `DMROrganizer/` – WPF application (views, view-models, models, services)
-- `DMROrganizer/ViewModels/MainViewModel.cs` – UI logic, commands, autosave
-- `DMROrganizer/MainWindow.xaml` – main UI layout
-- `DMROrganizer/Services/ChannelPersistenceService.cs` – import/export implementations
+- `DMROrganizer/` â€“ WPF application (views, view-models, models, services)
+- `DMROrganizer/ViewModels/MainViewModel.cs` â€“ UI logic, commands, autosave
+- `DMROrganizer/MainWindow.xaml` â€“ main UI layout
+- `DMROrganizer/Services/ChannelPersistenceService.cs` â€“ import/export implementations
 
 ## License
 This project is licensed under the MIT License. See `LICENSE` for details.
