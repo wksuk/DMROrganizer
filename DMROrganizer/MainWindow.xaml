@@ -1,0 +1,185 @@
+﻿<Window x:Class="DMROrganizer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d"
+        Title="DMR Organizer"
+        Height="800"
+        Width="1200"
+        MinHeight="700"
+        MinWidth="1000">
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="0,0,0,16">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" DockPanel.Dock="Right" VerticalAlignment="Center">
+                <Button Content="About" Command="{Binding ShowAboutCommand}" Padding="12,6" Margin="0,0,8,0" />
+                <Button Content="Toggle Theme" Command="{Binding ToggleThemeCommand}" Padding="12,6" />
+            </StackPanel>
+            <StackPanel>
+                <TextBlock Text="DMR Organizer" FontSize="26" FontWeight="Bold" />
+                <TextBlock Text="Capture, search, filter, and export your DMR channels." FontSize="13" Margin="0,4,0,0" />
+            </StackPanel>
+        </DockPanel>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="3*" />
+            </Grid.ColumnDefinitions>
+
+            <ScrollViewer Grid.Column="0" Margin="0,0,12,0" VerticalScrollBarVisibility="Auto">
+                <StackPanel>
+                    <GroupBox Header="Channel Details" Background="{DynamicResource CardBackgroundBrush}">
+                        <Grid Margin="8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Grid.Row="0" Grid.Column="0" Text="Alias" Margin="0,4" />
+                            <TextBox Grid.Row="0" Grid.Column="1" Margin="8,4" Text="{Binding NewChannel.Alias, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="1" Grid.Column="0" Text="Frequency (MHz)" Margin="0,4" />
+                            <TextBox Grid.Row="1" Grid.Column="1" Margin="8,4" Text="{Binding NewChannel.FrequencyText, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="2" Grid.Column="0" Text="Rx Only" Margin="0,4" />
+                            <CheckBox Grid.Row="2" Grid.Column="1" Margin="8,4" IsChecked="{Binding NewChannel.RxOnly}" Content="Mark as receive-only" />
+
+                            <TextBlock Grid.Row="3" Grid.Column="0" Text="Color Code" Margin="0,4" />
+                            <ComboBox Grid.Row="3" Grid.Column="1" Margin="8,4" ItemsSource="{Binding ColorCodes}" SelectedItem="{Binding NewChannel.ColorCode, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="4" Grid.Column="0" Text="Timeslot" Margin="0,4" />
+                            <ComboBox Grid.Row="4" Grid.Column="1" Margin="8,4" ItemsSource="{Binding TimeslotOptions}" SelectedItem="{Binding NewChannel.Timeslot, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="5" Grid.Column="0" Text="Talk Group" Margin="0,4" />
+                            <TextBox Grid.Row="5" Grid.Column="1" Margin="8,4" Text="{Binding NewChannel.TalkGroup, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="6" Grid.Column="0" Text="Contact" Margin="0,4" />
+                            <TextBox Grid.Row="6" Grid.Column="1" Margin="8,4" Text="{Binding NewChannel.Contact, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="7" Grid.Column="0" Text="Power" Margin="0,4" />
+                            <ComboBox Grid.Row="7" Grid.Column="1" Margin="8,4" ItemsSource="{Binding PowerOptions}" SelectedItem="{Binding NewChannel.Power, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" />
+
+                            <TextBlock Grid.Row="8" Grid.Column="0" Text="Zone" Margin="0,4" />
+                            <ComboBox Grid.Row="8" Grid.Column="1" Margin="8,4" ItemsSource="{Binding Zones}" Text="{Binding NewChannel.Zone, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" IsEditable="True" />
+
+                            <TextBlock Grid.Row="9" Grid.Column="0" Text="Notes" Margin="0,4" />
+                            <TextBox Grid.Row="9" Grid.Column="1" Margin="8,4" Height="100" AcceptsReturn="True" TextWrapping="Wrap" Text="{Binding NewChannel.Notes, UpdateSourceTrigger=PropertyChanged}" />
+
+                            <StackPanel Grid.Row="10" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,12,0,0">
+                                <Button Content="New" Command="{Binding NewChannelCommand}" Margin="0,0,8,0" Padding="16,6" />
+                                <Button Content="Delete" Command="{Binding DeleteChannelCommand}" Margin="0,0,8,0" Padding="16,6" />
+                                <Button Content="Save" Command="{Binding SaveChannelCommand}" Padding="16,6" />
+                            </StackPanel>
+                        </Grid>
+                    </GroupBox>
+
+                    <GroupBox Header="Zone Management" Background="{DynamicResource CardBackgroundBrush}">
+                        <StackPanel Margin="8">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBox Width="200" Text="{Binding NewZoneName, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,8,0" />
+                                <Button Content="Add Zone" Command="{Binding AddZoneCommand}" Margin="0,0,8,0" />
+                                <Button Content="Delete Zone" Command="{Binding DeleteZoneCommand}" />
+                            </StackPanel>
+                            <ListBox ItemsSource="{Binding Zones}" SelectedItem="{Binding SelectedZone}" Height="160" Margin="0,8,0,0">
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding}" />
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
+                        </StackPanel>
+                    </GroupBox>
+                </StackPanel>
+            </ScrollViewer>
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Border Grid.Row="0" Background="{DynamicResource CardBackgroundBrush}" Padding="12">
+                    <StackPanel>
+                        <TextBox Margin="0,0,0,8" Height="28" Text="{Binding SearchText, UpdateSourceTrigger=PropertyChanged}" />
+                        <WrapPanel ItemHeight="32" ItemWidth="220" Orientation="Horizontal">
+                            <ComboBox Width="200" Margin="0,0,8,8" ItemsSource="{Binding TimeslotFilterOptions}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding TimeslotFilter}" />
+                            <ComboBox Width="200" Margin="0,0,8,8" ItemsSource="{Binding ColorCodeFilterChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding ColorCodeFilter}" />
+                            <ComboBox Width="200" Margin="0,0,8,8" ItemsSource="{Binding PowerFilterOptions}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding PowerFilter}" />
+                            <ComboBox Width="200" Margin="0,0,8,8" ItemsSource="{Binding RxOnlyOptions}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding RxOnlyFilter}" />
+                            <ComboBox Width="200" Margin="0,0,8,8" ItemsSource="{Binding ZoneFilterChoices}" DisplayMemberPath="Label" SelectedValuePath="Value" SelectedValue="{Binding ZoneFilter}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,0,8,8" VerticalAlignment="Center">
+                                <TextBlock Text="Sort by" VerticalAlignment="Center" Margin="0,0,6,0" />
+                                <ComboBox Width="140" ItemsSource="{Binding SortFields}" SelectedItem="{Binding SelectedSortField}" />
+                                <CheckBox Content="Desc" Margin="8,0,0,0" IsChecked="{Binding IsSortDescending}" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </WrapPanel>
+                    </StackPanel>
+                </Border>
+
+                <DataGrid Grid.Row="1"
+                          ItemsSource="{Binding FilteredChannels}"
+                          SelectedItem="{Binding SelectedChannel, Mode=TwoWay}"
+                          AutoGenerateColumns="False"
+                          IsReadOnly="True"
+                          Margin="0,12,0,12"
+                          GridLinesVisibility="Horizontal"
+                          HeadersVisibility="Column">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Alias" Binding="{Binding Alias}" Width="*" MinWidth="120" />
+                        <DataGridTextColumn Header="Frequency" Binding="{Binding FrequencyMHz, StringFormat=F3}" Width="120" />
+                        <DataGridTextColumn Header="Color Code" Binding="{Binding ColorCode}" Width="80" />
+                        <DataGridTextColumn Header="Timeslot" Binding="{Binding Timeslot}" Width="80" />
+                        <DataGridTextColumn Header="Talk Group" Binding="{Binding TalkGroup}" Width="120" />
+                        <DataGridTextColumn Header="Contact" Binding="{Binding Contact}" Width="120" />
+                        <DataGridTextColumn Header="Zone" Binding="{Binding Zone}" Width="140" />
+                        <DataGridCheckBoxColumn Header="Rx Only" Binding="{Binding RxOnly}" Width="70" />
+                        <DataGridTextColumn Header="Power" Binding="{Binding Power}" Width="80" />
+                        <DataGridTextColumn Header="Notes" Binding="{Binding Notes}" Width="200" />
+                    </DataGrid.Columns>
+                    <DataGrid.GroupStyle>
+                        <GroupStyle>
+                            <GroupStyle.ContainerStyle>
+                                <Style TargetType="GroupItem">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="GroupItem">
+                                                <Expander Header="{Binding Name}" IsExpanded="True" Margin="0,0,0,8">
+                                                    <ItemsPresenter />
+                                                </Expander>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </GroupStyle.ContainerStyle>
+                        </GroupStyle>
+                    </DataGrid.GroupStyle>
+                </DataGrid>
+
+                <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Import" Command="{Binding ImportCommand}" Margin="0,0,12,0" Padding="16,6" />
+                    <Button Content="Export" Command="{Binding ExportCommand}" Padding="16,6" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
